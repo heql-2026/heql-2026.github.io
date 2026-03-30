@@ -3,126 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>央企名录</title>
+    <title>蜀道集团 - 下属企业导航</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
         body {
-            font-family: "Microsoft Yahei", sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
+            background-color: #f5f7fa;
             padding: 20px;
-            background-color: #f5f5f5;
         }
-        .header {
-            background-color: #c8102e;
-            color: white;
-            padding: 10px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
         }
+
         .title {
             text-align: center;
+            color: #0d47a1;
             font-size: 28px;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #0d47a1;
         }
-        .time {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        table {
+
+        /* 表格样式 */
+        .company-table {
             width: 100%;
             border-collapse: collapse;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        th, td {
-            padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
-        th {
-            background-color: #e0e0e0;
-            font-weight: bold;
+
+        .company-table th {
+            background-color: #0d47a1;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
         }
-        a {
-            color: #003366;
+
+        .company-table td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+        }
+
+        /* 表格行hover效果 */
+        .company-table tr:hover {
+            background-color: #f0f7ff;
+        }
+
+        /* 公司链接样式 */
+        .company-link {
+            color: #0d47a1;
             text-decoration: none;
+            font-weight: 500;
         }
-        a:hover {
-            color: #c8102e;
+
+        .company-link:hover {
             text-decoration: underline;
+            color: #1976d2;
+        }
+
+        /* 序号列居中 */
+        .index-col {
+            text-align: center;
+            width: 80px;
         }
     </style>
 </head>
 <body>
-    <div class="header">央企名录</div>
-    <h1 class="title">央企名录</h1>
-    <div class="time">发布时间：2025-07-29</div>
     <div class="container">
-        <table>
+        <h1 class="title">蜀道集团下属企业导航</h1>
+        <table class="company-table">
             <thead>
                 <tr>
                     <th>序号</th>
-                    <th>企业(集团)名称</th>
+                    <th>公司名称</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>1</td><td><a href="https://www.cnnc.com.cn/" target="_blank">中国核工业集团有限公司</a></td></tr>
-                <tr><td>2</td><td><a href="http://www.spacechina.com/" target="_blank">中国航天科技集团有限公司</a></td></tr>
-                <tr><td>3</td><td><a href="http://www.casic.com.cn/" target="_blank">中国航天科工集团有限公司</a></td></tr>
-                <tr><td>4</td><td><a href="https://www.avic.com.cn/" target="_blank">中国航空工业集团有限公司</a></td></tr>
-                <tr><td>5</td><td><a href="http://www.cssc.net.cn/" target="_blank">中国船舶集团有限公司</a></td></tr>
-                <tr><td>6</td><td><a href="http://www.norincogroup.com.cn/" target="_blank">中国兵器工业集团有限公司</a></td></tr>
-                <tr><td>7</td><td><a href="https://www.csgc.com.cn/" target="_blank">中国兵器装备集团有限公司</a></td></tr>
-                <tr><td>8</td><td><a href="http://www.cetc.com.cn/" target="_blank">中国电子科技集团有限公司</a></td></tr>
-                <tr><td>9</td><td><a href="https://www.aecc.cn/" target="_blank">中国航空发动机集团有限公司</a></td></tr>
-                <tr><td>10</td><td><a href="https://www.crtamg.com.cn/" target="_blank">中国融通资产管理集团有限公司</a></td></tr>
-                <tr><td>11</td><td><a href="http://www.cnpc.com.cn/" target="_blank">中国石油天然气集团有限公司</a></td></tr>
-                <tr><td>12</td><td><a href="http://www.sinopecgroup.com/" target="_blank">中国石油化工集团有限公司</a></td></tr>
-                <tr><td>13</td><td><a href="https://www.cnooc.com.cn/" target="_blank">中国海洋石油集团有限公司</a></td></tr>
-                <tr><td>14</td><td><a href="https://www.pipechina.com.cn/" target="_blank">国家石油天然气管网集团有限公司</a></td></tr>
-                <tr><td>15</td><td><a href="http://www.sgcc.com.cn/" target="_blank">国家电网有限公司</a></td></tr>
-                <tr><td>16</td><td><a href="http://www.csg.cn/" target="_blank">中国南方电网有限责任公司</a></td></tr>
-                <tr><td>17</td><td><a href="http://www.chng.com.cn/" target="_blank">中国华能集团有限公司</a></td></tr>
-                <tr><td>18</td><td><a href="http://www.china-cdt.com/" target="_blank">中国大唐集团有限公司</a></td></tr>
-                <tr><td>19</td><td><a href="http://www.chd.com.cn/" target="_blank">中国华电集团有限公司</a></td></tr>
-                <tr><td>20</td><td><a href="http://www.spic.com.cn/" target="_blank">国家电力投资集团有限公司</a></td></tr>
-            </tbody>
-        </table>
-        <table>
-            <thead>
                 <tr>
-                    <th>序号</th>
-                    <th>企业(集团)名称</th>
+                    <td class="index-col">1</td>
+                    <td><a href="https://www.scgs.com.cn/" target="_blank" class="company-link">四川高速公路建设开发集团有限公司</a></td>
                 </tr>
-            </thead>
-            <tbody>
-                <tr><td>51</td><td><a href="https://www.cmhk.com/" target="_blank">招商局集团有限公司</a></td></tr>
-                <tr><td>52</td><td><a href="https://www.crc.com.cn/" target="_blank">华润（集团）有限公司</a></td></tr>
-                <tr><td>53</td><td><a href="http://www.ctg.cn/" target="_blank">中国旅游集团有限公司[香港中旅（集团）有限公司]</a></td></tr>
-                <tr><td>54</td><td><a href="http://www.comac.cc/" target="_blank">中国商用飞机有限责任公司</a></td></tr>
-                <tr><td>55</td><td><a href="https://www.cecep.cn/" target="_blank">中国节能环保集团有限公司</a></td></tr>
-                <tr><td>56</td><td><a href="https://www.ciecc.com.cn/" target="_blank">中国国际工程咨询有限公司</a></td></tr>
-                <tr><td>57</td><td><a href="http://www.cctgroup.com.cn/" target="_blank">中国诚通控股集团有限公司</a></td></tr>
-                <tr><td>58</td><td><a href="http://www.chinacoal.com/" target="_blank">中国中煤能源集团有限公司</a></td></tr>
-                <tr><td>59</td><td><a href="http://www.ccteg.cn/" target="_blank">中国煤炭科工集团有限公司</a></td></tr>
-                <tr><td>60</td><td><a href="https://www.camst.com.cn/" target="_blank">中国机械科学研究总院集团有限公司</a></td></tr>
-                <tr><td>61</td><td><a href="http://www.sinomachina.com/" target="_blank">中国机械工业集团有限公司</a></td></tr>
-                <tr><td>62</td><td><a href="http://www.cncec.com/" target="_blank">中国化学工程集团有限公司</a></td></tr>
-                <tr><td>63</td><td><a href="https://www.cnsalt.com/" target="_blank">中国盐业集团有限公司</a></td></tr>
-                <tr><td>64</td><td><a href="http://www.cnbm.com.cn/" target="_blank">中国建材集团有限公司</a></td></tr>
-                <tr><td>65</td><td><a href="http://www.cnmc.com.cn/" target="_blank">中国有色矿业集团有限公司</a></td></tr>
-                <tr><td>66</td><td><a href="https://www.china-rare.com/" target="_blank">中国稀土集团有限公司</a></td></tr>
-                <tr><td>67</td><td><a href="https://www.crmgroup.cn/" target="_blank">中国资源循环集团有限公司</a></td></tr>
-                <tr><td>68</td><td><a href="http://www.grinm.com/" target="_blank">中国有研科技集团有限公司</a></td></tr>
-                <tr><td>69</td><td><a href="https://www.bgrimm.com/" target="_blank">矿冶科技集团有限公司</a></td></tr>
-                <tr><td>70</td><td><a href="https://www.ciic.com.cn/" target="_blank">中国国际技术智力合作集团有限公司</a></td></tr>
+                <tr>
+                    <td class="index-col">2</td>
+                    <td><a href="https://www.scrbc.com.cn/" target="_blank" class="company-link">四川路桥建设集团股份有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">3</td>
+                    <td><a href="https://www.cygs.com/" target="_blank" class="company-link">四川成渝高速公路股份有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">4</td>
+                    <td><a href="https://www.shugaogroup.com" target="_blank" class="company-link">四川蜀道高速公路集团有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">5</td>
+                    <td><a href="https://www.sczqgs.com/" target="_blank" class="company-link">四川藏区高速公路有限责任公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">6</td>
+                    <td><a href="http://www.sdtljt.com.cn/" target="_blank" class="company-link">四川蜀道铁路投资集团有限责任公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">7</td>
+                    <td><a href="https://www.shudaogdjt.com" target="_blank" class="company-link">四川蜀道轨道交通集团有限责任公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">8</td>
+                    <td><a href="https://www.sdtlyyjt.com/" target="_blank" class="company-link">四川蜀道铁路运营管理集团有限责任公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">9</td>
+                    <td><a href="https://www.surg.sc.cn/" target="_blank" class="company-link">四川蜀道城乡投资集团有限责任公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">10</td>
+                    <td><a href="https://www.shudaowl.com/" target="_blank" class="company-link">四川蜀道物流集团有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">11</td>
+                    <td><a href="https://www.shudaojtfwjt.com" target="_blank" class="company-link">蜀道交通服务集团有限责任公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">12</td>
+                    <td><a href="https://www.sdzbkg.com/" target="_blank" class="company-link">蜀道资本控股集团有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">13</td>
+                    <td><a href="https://www.shudaoit.com/" target="_blank" class="company-link">四川蜀道智慧交通集团有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">14</td>
+                    <td><a href="https://www.schdri.com/" target="_blank" class="company-link">四川省公路规划勘察设计研究院有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">15</td>
+                    <td><a href="https://www.scodi.cn/introduce.aspx?mid=221&sid=" target="_blank" class="company-link">四川省交通勘察设计研究院有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">16</td>
+                    <td><a href="http://www.scglgc.com/" target="_blank" class="company-link">四川公路工程咨询监理有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">17</td>
+                    <td><a href="http://www.scjtsjzxy.com/" target="_blank" class="company-link">四川交投设计咨询研究院有限责任公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">18</td>
+                    <td><a href="https://www.shudaozb.com/" target="_blank" class="company-link">四川蜀道装备科技股份有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">19</td>
+                    <td><a href="https://www.sdlwyxzx.com/" target="_blank" class="company-link">蜀道集团路网运行中心</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">20</td>
+                    <td><a href="http://www.scchuanrui.com/" target="_blank" class="company-link">四川省川瑞发展投资有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">21</td>
+                    <td><a href="https://shudao199.com/" target="_blank" class="company-link">成都瑞华一九九商业管理有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">22</td>
+                    <td><a href="https://www.groupama-sdig.com/" target="_blank" class="company-link">安盟财产保险有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">23</td>
+                    <td><a href="http://www.sichuanhongda.com/" target="_blank" class="company-link">四川宏达股份有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">24</td>
+                    <td><a href="https://www.sdmi.com.cn/" target="_blank" class="company-link">四川蜀道矿业集团股份有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">25</td>
+                    <td><a href="https://www.xinzhu.com/" target="_blank" class="company-link">成都市新筑路桥机械股份有限公司</a></td>
+                </tr>
+                <tr>
+                    <td class="index-col">26</td>
+                    <td><a href="https://www.scshengtian.com/about/aboutjj/" target="_blank" class="company-link">四川晟天新能源发展有限公司</a></td>
+                </tr>
             </tbody>
         </table>
     </div>
