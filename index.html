@@ -3,199 +3,1077 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>蜀道集团 - 下属企业导航</title>
+    <title>蜀道集团下属公司官网导航</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
+            font-family: "微软雅黑", sans-serif;
         }
-
         body {
-            background-color: #f5f7fa;
+            background-color: #f8f9fa;
             padding: 20px;
+            /* 为置顶标题预留空间 */
+            padding-top: 100px;
         }
-
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             padding: 30px;
         }
-
-        .title {
+        /* 标题样式修改：22号字体、加粗、置顶、不透明 */
+        h1 {
             text-align: center;
-            color: #0d47a1;
-            font-size: 28px;
-            margin-bottom: 25px;
+            color: #2c3e50;
+            margin-bottom: 30px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #0d47a1;
+            border-bottom: 2px solid #3498db;
+            /* 字号调整为22并加粗 */
+            font-size: 22px !important;
+            font-weight: bold;
+            /* 置顶样式 */
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px;
+            background-color: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+            /* 确保不透明 */
+            opacity: 1;
         }
-
-        /* 表格样式 */
-        .company-table {
+        .nav-table {
             width: 100%;
             border-collapse: collapse;
-            text-align: left;
         }
-
-        .company-table th {
-            background-color: #0d47a1;
+        .nav-table th, .nav-table td {
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            font-size: 16px; 
+            vertical-align: top; 
+        }
+        /* 表头样式修改：置顶、不透明、无重叠 */
+        .nav-table th {
+            background-color: #3498db;
             color: white;
-            padding: 15px;
-            font-size: 16px;
+            text-align: center !important;
+            /* 表头置顶 */
+            position: sticky;
+            top: 80px; /* 对应标题高度，避免重叠 */
+            /* 确保不透明 */
+            opacity: 1;
+            z-index: 99;
         }
-
-        .company-table td {
-            padding: 14px 15px;
-            border-bottom: 1px solid #eee;
-            font-size: 15px;
+        .nav-table tr:nth-child(even) {
+            background-color: #f8f9fa;
         }
-
-        /* 表格行hover效果 */
-        .company-table tr:hover {
-            background-color: #f0f7ff;
+        .nav-table tr:hover {
+            background-color: #e3f2fd;
         }
-
-        /* 公司链接样式 */
+        /* 链接样式 */
         .company-link {
-            color: #0d47a1;
+            color: #2980b9;
             text-decoration: none;
-            font-weight: 500;
         }
-
         .company-link:hover {
             text-decoration: underline;
-            color: #1976d2;
+            color: #1a5276;
+        }
+        /* 无链接样式（黑色） */
+        .no-link {
+            color: #000;
+            text-decoration: none;
+            cursor: default;
+        }
+        /* 序号列宽90px，居中、置顶（移除背景色） */
+        .serial-num {
+            text-align: center;
+            width: 90px;
+            position: sticky;
+            top: 80px; /* 与表头置顶高度一致 */
+            z-index: 98;
+            /* 移除序号列蓝色背景色 */
+            background-color: transparent;
+            color: inherit; /* 恢复默认文字颜色 */
+        }
+        /* 备注列宽150px，居中、置顶（移除背景色） */
+        .remark-col {
+            text-align: center;
+            width: 150px;
+            position: sticky;
+            top: 80px; /* 与表头置顶高度一致 */
+            z-index: 98;
+            /* 移除备注列蓝色背景色 */
+            background-color: transparent;
+            color: inherit; /* 恢复默认文字颜色 */
+        }
+        /* 强制居中 */
+        .nav-table .serial-num, .nav-table .remark-col {
+            text-align: center !important;
         }
 
-        /* 序号列居中 */
-        .index-col {
+        /* --- 下拉箭头+子菜单样式 --- */
+        .dropdown-wrapper {
+            position: relative; 
+            width: 100%;
+            line-height: 1.2;
+        }
+        /* 表头行容器，确保文字和箭头垂直居中 */
+        .dropdown-header-row {
+            display: flex;
+            align-items: center; /* 垂直居中对齐 */
+            width: 100%;
+            height: 100%;
+        }
+        .dropdown-header {
+            flex: 1; /* 文字占满除箭头外的空间 */
+            cursor: pointer;
+        }
+        .dropdown-arrow {
+            /* 固定箭头位置，和文字垂直居中 */
+            flex-shrink: 0;
+            width: 20px;
             text-align: center;
-            width: 80px;
+            font-size: 12px;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            color: #3498db; /* 蓝色箭头 */
+            font-weight: bold;
+            /* 确保箭头位置不偏移 */
+            position: static !important;
+            transform: none !important;
+        }
+        .dropdown-open .dropdown-arrow {
+            transform: rotate(180deg) !important; /* 仅旋转，不位移 */
+        }
+        .sub-companies {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin: 8px 0 0 0; 
+            border-left: 2px solid #3498db;
+            padding: 0 0 0 15px; 
+            width: calc(100% - 20px); 
+            line-height: 1.2;
+            /* 子菜单不影响箭头位置 */
+            clear: both;
+        }
+        .sub-company-item {
+            padding: 0 0 0 0; 
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            margin-top: 8px; 
+        }
+        .sub-company-name {
+            flex: 1;
+        }
+        .sub-company-remark {
+            margin-left: 10px;
+            color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="title">蜀道集团下属企业导航</h1>
-        <table class="company-table">
+        <h1>蜀道集团下属公司官网导航</h1>
+        <table class="nav-table">
             <thead>
                 <tr>
-                    <th>序号</th>
+                    <th class="serial-num">序号</th>
                     <th>公司名称</th>
+                    <th class="remark-col">备注</th>
                 </tr>
             </thead>
             <tbody>
+                <!-- 1. 川高公司 -->
                 <tr>
-                    <td class="index-col">1</td>
-                    <td><a href="https://www.scgs.com.cn/" target="_blank" class="company-link">四川高速公路建设开发集团有限公司</a></td>
+                    <td class="serial-num">1</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper1">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.scgs.com.cn/" target="_blank" class="dropdown-header company-link">
+                                    四川高速公路建设开发集团有限公司(川高公司)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper1')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies1">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cdgs.scgs.com.cn/" class="company-link" target="_blank">川东公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cngs.scgs.com.cn/" class="company-link" target="_blank">川西公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cxgs.scgs.com.cn/" class="company-link" target="_blank">川北公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://chngs.scgs.com.cn/" class="company-link" target="_blank">成南公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://dgs.scgs.com.cn/" class="company-link" target="_blank">达陕公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cngs.scgs.com.cn/" class="company-link" target="_blank">川南公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://pxgs.scgs.com.cn/" class="company-link" target="_blank">攀西公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://yxgs.scgs.com.cn/" class="company-link" target="_blank">雅西公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://gngs.scgs.com.cn/" class="company-link" target="_blank">广南公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cdngs.scgs.com.cn/" class="company-link" target="_blank">成德南公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://ymlgs.scgs.com.cn/" class="company-link" target="_blank">雅眉乐公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://qbgs.scgs.com.cn/" class="company-link" target="_blank">奉巴公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://rmgs.scgs.com.cn/" class="company-link" target="_blank">仁沐公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://mjgs.scgs.com.cn/" class="company-link" target="_blank">绵九公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://lxgs.scgs.com.cn/" class="company-link" target="_blank">乐西（昭普）公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://yjgs.scgs.com.cn/" class="company-link" target="_blank">沿江宜金公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://drgs.scgs.com.cn/" class="company-link" target="_blank">德绕公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://gmgs.scgs.com.cn/" class="company-link" target="_blank">广绵公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://tmlgs.scgs.com.cn/" class="company-link" target="_blank">天眉乐公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cnygs.scgs.com.cn/" class="company-link" target="_blank">成内渝公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cmcb.scgs.com.cn/" class="company-link" target="_blank">成绵苍巴公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cxtz.scgs.com.cn/" class="company-link" target="_blank">川西投资公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://glwl.scgs.com.cn/" class="company-link" target="_blank">川高文旅公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://htgl.scgs.com.cn/" class="company-link" target="_blank">华腾检测公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://jlgs.scgs.com.cn/" class="company-link" target="_blank">咨询监理所</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://pygs.scgs.com.cn/" class="company-link" target="_blank">攀盐公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://jxgs.scgs.com.cn/" class="company-link" target="_blank">金西公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 2. 四川路桥（修正网址） -->
+                <tr>
+                    <td class="serial-num">2</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper2">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.scrbc.com.cn/" target="_blank" class="dropdown-header company-link">
+                                    四川路桥建设集团股份有限公司(四川路桥)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper2')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies2">
+                                <!-- 修正：四川公路桥梁建设集团有限公司 网址 -->
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.scrbc.com.cn/" class="company-link" target="_blank">四川公路桥梁建设集团有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <!-- 修正：四川省交通建设集团有限公司 网址 -->
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.scjtgc.com/" class="company-link" target="_blank">四川省交通建设集团有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <!-- 修正：四川川交路桥有限责任公司 网址 -->
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.sccjlq.com" class="company-link" target="_blank">四川川交路桥有限责任公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <!-- 修正：四川路桥桥梁工程有限责任公司 网址 -->
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.scqljs.com/" class="company-link" target="_blank">四川路桥桥梁工程有限责任公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.sclqhdgs.com/" class="company-link" target="_blank">四川路桥华东建设有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.sclh.com.cn/" class="company-link" target="_blank">四川路航建设工程有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.sclqst.com/" class="company-link" target="_blank">四川路桥盛通建筑工程有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川省铁路建设有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀道新材料集团股份有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀道清洁能源集团有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川铁能电力开发有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川智能建造科技股份有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川路桥装备技术服务分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川路桥物资分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川路桥北京分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 3. 成渝公司 -->
+                <tr>
+                    <td class="serial-num">3</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper3">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.cygs.com/" target="_blank" class="dropdown-header company-link">
+                                    四川成渝高速公路股份有限公司(成渝公司)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper3')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies3">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">公路运营管理一分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.sccrgs.com/" class="company-link" target="_blank">公路运营管理二分公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">公路运营管理三分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.sclgs.cn/" class="company-link" target="_blank">四川成乐高速公路有限责任公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.sdxnykj.com/" class="company-link" target="_blank">蜀道新能源（科技）公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.sntz.sc.cn/about.aspx?mid=89" class="company-link" target="_blank">四川蜀南投资管理有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.scdshtz.com/index.aspx" class="company-link" target="_blank">四川蜀道成渝投资有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://cdshny.com/" class="company-link" target="_blank">四川成渝新能建设有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.scscdly.com/" class="company-link" target="_blank">四川省多式联运投资发展有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.scscsy.com/about.aspx?mid=127&menuid=136" class="company-link" target="_blank">四川蜀厦实业有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">成都城北出口高速公路有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">荆宜公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 4. 蜀道高速集团 -->
+                <tr>
+                    <td class="serial-num">4</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper4">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.shugaogroup.com" target="_blank" class="dropdown-header company-link">
+                                    四川蜀道高速公路集团有限公司(蜀道高速集团)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper4')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies4">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.nvmngs.com/xxgk/jbxx/gsjj/" class="company-link" target="_blank">南渝公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.scbgvgs.com/" class="company-link" target="_blank">巴广渝公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.xggs.com.cn/" class="company-link" target="_blank">沪渝公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.cygsgl.com/index.shtml" class="company-link" target="_blank">成宜公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.scvipm.com/" class="company-link" target="_blank">沿江攀宁公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://sdigzggs.com/" class="company-link" target="_blank">镇广公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.sclhgs.com.cn/" class="company-link" target="_blank">乐汉公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.scaxgs.com.cn/" class="company-link" target="_blank">宁西公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.scxxgs.com/" class="company-link" target="_blank">西香公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://lztgs.scgs.com.cn/" class="company-link" target="_blank">乐资铜成都分公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">蜀高实业公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.scitic.cn/" class="company-link" target="_blank">金通检测公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">南三公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 5. 藏高公司 -->
+                <tr>
+                    <td class="serial-num">5</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper5">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.sczqgs.com/" target="_blank" class="dropdown-header company-link">
+                                    四川藏区高速公路有限责任公司(藏高公司)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper5')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies5">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.ykgs.com.cn/" class="company-link" target="_blank">雅康（泸石）公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.scwmgs.com/" class="company-link" target="_blank">汶马公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.sckxgs.cn/" class="company-link" target="_blank">康新公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">川汶（兴蜀）公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.lc-gs.com/" class="company-link" target="_blank">郎川公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.scclvgs.com/" class="company-link" target="_blank">成芦荥公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">新炉公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">藏高实业公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.imgcgl.com/" class="company-link" target="_blank">久马（川红）公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">藏高科技咨询公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 6. 蜀道铁路投资集团 -->
+                <tr>
+                    <td class="serial-num">6</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper6">
+                            <div class="dropdown-header-row">
+                                <a href="http://www.sdtljt.com.cn/" target="_blank" class="dropdown-header company-link">
+                                    四川蜀道铁路投资集团有限责任公司(蜀道铁路投资集团)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper6')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies6">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川隆叙宜铁路有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">绵遂内铁路有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川南广城际铁路有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">汉巴南城际铁路有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川连乐铁路有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川叙大铁路有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">川铁（宜宾）铁路有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">川铁（泸州）铁路有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川归连铁路有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀道电建建设有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀铁投物资有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川省铁证工程检测有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">川铁工程设计咨询有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">川铁建筑新材料（叙永）有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">川铁新材料（古蔺）有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">乐山龙鹰矿业有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">蜀道（泸州）物业管理有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 7. 蜀道轨道交通集团 -->
+                <tr>
+                    <td class="serial-num">7</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper7">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.shudaogdjt.com" target="_blank" class="dropdown-header company-link">
+                                    四川蜀道轨道交通集团有限责任公司(蜀道轨道交通集团)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper7')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies7">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川都金山地轨道交通有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川川南轨道交通运营有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">宜宾智轨交通有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川渝江轨道交通有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川欧亚路态供应链管理有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川省轨道交通投资有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川新制式轨道文旅发展有限责任公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 8. 蜀道铁路运营集团 -->
+                <tr>
+                    <td class="serial-num">8</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper8">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.sdtlyyjt.com/" target="_blank" class="dropdown-header company-link">
+                                    四川蜀道铁路运营管理集团有限责任公司(蜀道铁路运营集团)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper8')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies8">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">合资铁路公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">泸州铁路公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">宜宾铁路公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">归连铁路公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">地方铁路公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">铁路物流公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">泸州物流公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">铁路运维公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">乐山分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">蜀道班列分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川铁路发展公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">泸州分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 9. 蜀道城乡集团 -->
+                <tr>
+                    <td class="serial-num">9</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper9">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.surg.sc.cn/" target="_blank" class="dropdown-header company-link">
+                                    四川蜀道城乡投资集团有限责任公司(蜀道城乡集团)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper9')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies9">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.sdcxcd.com/" class="company-link" target="_blank">成都分公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://sdcxcdde.com/" class="company-link" target="_blank">成都第二分公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">川南分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">川西南分公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://cdb.surg.sc.cn/" class="company-link" target="_blank">川东北分公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">顺欣建筑装饰公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.sdcxgy.com.cn/gzsk/gsjj/index.shtml" class="company-link" target="_blank">广业贸易公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">物业服务集团公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">商业管理公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">酒店管理有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 10. 蜀道物流集团 -->
+                <tr>
+                    <td class="serial-num">10</td>
+                    <td>
+                        <div class="dropdown-wrapper" id="dropdownWrapper10">
+                            <div class="dropdown-header-row">
+                                <a href="https://www.shudaowl.com/" target="_blank" class="dropdown-header company-link">
+                                    四川蜀道物流集团有限公司(蜀道物流集团)
+                                </a>
+                                <span class="dropdown-arrow" onclick="toggleDropdown('dropdownWrapper10')">▼</span>
+                            </div>
+                            <div class="sub-companies" id="subCompanies10">
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.scgrwl.com/" class="company-link" target="_blank">四川蜀物广润物流有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://scsitwz.com.cn/" class="company-link" target="_blank">四川省交通物资有限责任公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.sduxgs.com.cn/" class="company-link" target="_blank">成都启新汽车服务有限责任公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="http://www.swro.com.cn/" class="company-link" target="_blank">四川蜀物蓉欧实业有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.hnshudao.com/rap/rcnqyu.php" class="company-link" target="_blank">海南蜀物实业有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><a href="https://www.szctsv.com/" class="company-link" target="_blank">深圳蜀物实业有限公司</a></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀路面材料有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀物天府建材有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀物能源有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀道物流园区发展有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">上海蜀物多联实业有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">蜀道物流（香港）有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">成都润置物业管理有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川省铁产石油化工有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">重庆市荣昌区吉鹏建材有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川铁投现代农业发展股份有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                                <div class="sub-company-item">
+                                    <span class="sub-company-name"><span class="no-link">四川蜀物兴川物流发展有限公司</span></span>
+                                    <span class="sub-company-remark">子公司</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="remark-col">直属企业</td>
+                </tr>
+
+                <!-- 其余公司保持不变 -->
+                <tr>
+                    <td class="serial-num">11</td>
+                    <td><a href="https://www.shudaojtfwjt.com" target="_blank" class="company-link">蜀道交通服务集团有限责任公司(蜀道交通服务集团)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">2</td>
-                    <td><a href="https://www.scrbc.com.cn/" target="_blank" class="company-link">四川路桥建设集团股份有限公司</a></td>
+                    <td class="serial-num">12</td>
+                    <td><a href="https://www.sdzbkg.com/" target="_blank" class="company-link">蜀道资本控股集团有限公司(蜀道资本集团)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">3</td>
-                    <td><a href="https://www.cygs.com/" target="_blank" class="company-link">四川成渝高速公路股份有限公司</a></td>
+                    <td class="serial-num">13</td>
+                    <td><a href="https://www.shudaoit.com/" target="_blank" class="company-link">四川蜀道智慧交通集团有限公司(蜀道智慧交通集团)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">4</td>
-                    <td><a href="https://www.shugaogroup.com" target="_blank" class="company-link">四川蜀道高速公路集团有限公司</a></td>
+                    <td class="serial-num">14</td>
+                    <td><a href="https://www.schdri.com/" target="_blank" class="company-link">四川省公路规划勘察设计研究院有限公司(公路设计院公司)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">5</td>
-                    <td><a href="https://www.sczqgs.com/" target="_blank" class="company-link">四川藏区高速公路有限责任公司</a></td>
+                    <td class="serial-num">15</td>
+                    <td><a href="https://www.scodi.cn/introduce.aspx?mid=221&sid=" target="_blank" class="company-link">四川省交通勘察设计研究院有限公司(交通设计院公司)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">6</td>
-                    <td><a href="http://www.sdtljt.com.cn/" target="_blank" class="company-link">四川蜀道铁路投资集团有限责任公司</a></td>
+                    <td class="serial-num">16</td>
+                    <td><a href="http://www.scglgc.com/" target="_blank" class="company-link">四川公路工程咨询监理有限公司(四川公路咨询公司)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">7</td>
-                    <td><a href="https://www.shudaogdjt.com" target="_blank" class="company-link">四川蜀道轨道交通集团有限责任公司</a></td>
+                    <td class="serial-num">17</td>
+                    <td><a href="http://www.scjtsjzxy.com/" target="_blank" class="company-link">四川交投设计咨询研究院有限责任公司(设计咨询研究院)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">8</td>
-                    <td><a href="https://www.sdtlyyjt.com/" target="_blank" class="company-link">四川蜀道铁路运营管理集团有限责任公司</a></td>
+                    <td class="serial-num">18</td>
+                    <td><a href="https://www.shudaozb.com/" target="_blank" class="company-link">四川蜀道装备科技股份有限公司(蜀道装备公司)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">9</td>
-                    <td><a href="https://www.surg.sc.cn/" target="_blank" class="company-link">四川蜀道城乡投资集团有限责任公司</a></td>
+                    <td class="serial-num">19</td>
+                    <td><span class="no-link">四川蜀道智联科技产业发展股份有限公司(蜀道智联公司)</span></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">10</td>
-                    <td><a href="https://www.shudaowl.com/" target="_blank" class="company-link">四川蜀道物流集团有限公司</a></td>
+                    <td class="serial-num">20</td>
+                    <td><span class="no-link">四川蜀道教育管理有限公司(蜀道教育公司)</span></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">11</td>
-                    <td><a href="https://www.shudaojtfwjt.com" target="_blank" class="company-link">蜀道交通服务集团有限责任公司</a></td>
+                    <td class="serial-num">21</td>
+                    <td><a href="https://www.sdlwyxzx.com/" target="_blank" class="company-link">蜀道集团路网运行中心(路网中心)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">12</td>
-                    <td><a href="https://www.sdzbkg.com/" target="_blank" class="company-link">蜀道资本控股集团有限公司</a></td>
+                    <td class="serial-num">22</td>
+                    <td><a href="http://www.scchuanrui.com/" target="_blank" class="company-link">四川省川瑞发展投资有限公司(川瑞公司)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">13</td>
-                    <td><a href="https://www.shudaoit.com/" target="_blank" class="company-link">四川蜀道智慧交通集团有限公司</a></td>
+                    <td class="serial-num">23</td>
+                    <td><span class="no-link">蜀道投资集团有限责任公司北京分公司(北京分公司)</span></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">14</td>
-                    <td><a href="https://www.schdri.com/" target="_blank" class="company-link">四川省公路规划勘察设计研究院有限公司</a></td>
+                    <td class="serial-num">24</td>
+                    <td><a href="https://shudao199.com/" target="_blank" class="company-link">成都瑞华一九九商业管理有限公司(一九九商管公司)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">15</td>
-                    <td><a href="https://www.scodi.cn/introduce.aspx?mid=221&sid=" target="_blank" class="company-link">四川省交通勘察设计研究院有限公司</a></td>
+                    <td class="serial-num">25</td>
+                    <td><a href="https://www.groupama-sdig.com/" target="_blank" class="company-link">安盟财产保险有限公司(安盟保险)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">16</td>
-                    <td><a href="http://www.scglgc.com/" target="_blank" class="company-link">四川公路工程咨询监理有限公司</a></td>
+                    <td class="serial-num">26</td>
+                    <td><a href="http://www.sichuanhongda.com/" target="_blank" class="company-link">四川宏达股份有限公司(宏达股份)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">17</td>
-                    <td><a href="http://www.scjtsjzxy.com/" target="_blank" class="company-link">四川交投设计咨询研究院有限责任公司</a></td>
+                    <td class="serial-num">27</td>
+                    <td><span class="no-link">四川宏达（集团）有限公司(宏达集团)</span></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">18</td>
-                    <td><a href="https://www.shudaozb.com/" target="_blank" class="company-link">四川蜀道装备科技股份有限公司</a></td>
+                    <td class="serial-num">28</td>
+                    <td><a href="https://www.sdmi.com.cn/" target="_blank" class="company-link">四川蜀道矿业集团股份有限公司(蜀道矿业集团)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">19</td>
-                    <td><a href="https://www.sdlwyxzx.com/" target="_blank" class="company-link">蜀道集团路网运行中心</a></td>
+                    <td class="serial-num">29</td>
+                    <td><span class="no-link">四川蜀道清洁能源集团有限公司(蜀道清洁能源集团)</span></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">20</td>
-                    <td><a href="http://www.scchuanrui.com/" target="_blank" class="company-link">四川省川瑞发展投资有限公司</a></td>
+                    <td class="serial-num">30</td>
+                    <td><a href="https://www.xinzhu.com/" target="_blank" class="company-link">成都市新筑路桥机械股份有限公司(新筑股份)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
                 <tr>
-                    <td class="index-col">21</td>
-                    <td><a href="https://shudao199.com/" target="_blank" class="company-link">成都瑞华一九九商业管理有限公司</a></td>
-                </tr>
-                <tr>
-                    <td class="index-col">22</td>
-                    <td><a href="https://www.groupama-sdig.com/" target="_blank" class="company-link">安盟财产保险有限公司</a></td>
-                </tr>
-                <tr>
-                    <td class="index-col">23</td>
-                    <td><a href="http://www.sichuanhongda.com/" target="_blank" class="company-link">四川宏达股份有限公司</a></td>
-                </tr>
-                <tr>
-                    <td class="index-col">24</td>
-                    <td><a href="https://www.sdmi.com.cn/" target="_blank" class="company-link">四川蜀道矿业集团股份有限公司</a></td>
-                </tr>
-                <tr>
-                    <td class="index-col">25</td>
-                    <td><a href="https://www.xinzhu.com/" target="_blank" class="company-link">成都市新筑路桥机械股份有限公司</a></td>
-                </tr>
-                <tr>
-                    <td class="index-col">26</td>
-                    <td><a href="https://www.scshengtian.com/about/aboutjj/" target="_blank" class="company-link">四川晟天新能源发展有限公司</a></td>
+                    <td class="serial-num">31</td>
+                    <td><a href="https://www.scshengtian.com/about/aboutjj/" target="_blank" class="company-link">四川晟天新能源发展有限公司(晟天新能源)</a></td>
+                    <td class="remark-col">直属企业</td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <script>
+        // 通用下拉菜单切换函数
+        function toggleDropdown(wrapperId) {
+            // 1. 关闭所有已展开的下拉菜单
+            const allDropdownWrappers = document.querySelectorAll('.dropdown-wrapper');
+            allDropdownWrappers.forEach(wrapper => {
+                if (wrapper.id !== wrapperId && wrapper.classList.contains('dropdown-open')) {
+                    wrapper.classList.remove('dropdown-open');
+                    const num = wrapper.id.replace('dropdownWrapper', '');
+                    const subCompanies = document.getElementById(`subCompanies${num}`);
+                    subCompanies.style.maxHeight = '0';
+                }
+            });
+
+            // 2. 切换当前点击的下拉菜单状态
+            const currentWrapper = document.getElementById(wrapperId);
+            const num = wrapperId.replace('dropdownWrapper', '');
+            const currentSubCompanies = document.getElementById(`subCompanies${num}`);
+            
+            currentWrapper.classList.toggle('dropdown-open');
+            if (currentWrapper.classList.contains('dropdown-open')) {
+                currentSubCompanies.style.maxHeight = currentSubCompanies.scrollHeight + 'px';
+            } else {
+                currentSubCompanies.style.maxHeight = '0';
+            }
+        }
+    </script>
 </body>
 </html>
